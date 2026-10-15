@@ -100,8 +100,8 @@ Aucune installation de paquet (npm/yarn) n'est requise.
 
 1. **Cloner le dépôt** :
    ```bash
-   git clone https://github.com/votre-compte/TaskMaster.git
-   cd TaskMaster
+   git clone https://github.com/lucienhaikou10/TaskMaster-Pro.git
+   cd TaskMaster-Pro
    ```
 2. **Ouvrir dans le navigateur** :
    * Double-cliquez simplement sur `index.html` ou ouvrez-le avec l'extension **Live Server** sous VS Code / Antigravity.
