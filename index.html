@@ -4,16 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TaskMaster Pro - JS Vanilla</title>
+  
+  <!-- Feuille de styles principale -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Conteneur principal centré de l'application -->
   <div class="app-container">
+    
+    <!-- En-tête : Titre et sous-titre descriptif -->
     <header class="app-header">
       <h1>TaskMaster Pro</h1>
       <p class="subtitle">Gestionnaire d'état réactif en Vanilla JS</p>
     </header>
 
-    <form id="task-form">
+    <!-- Formulaire d'ajout de tâche -->
+    <form id="task-form" aria-label="Ajouter une nouvelle tâche">
       <input
         type="text"
         id="task-input"
@@ -21,23 +27,30 @@
         required
         autocomplete="off"
         maxlength="200"
+        aria-label="Titre de la tâche"
       >
       <button type="submit" id="add-btn">Ajouter</button>
     </form>
 
+    <!-- Barre d'onglets de filtrage (Toutes / En cours / Terminées) -->
     <div class="filters" id="filter-container" role="group" aria-label="Filtrer les tâches">
       <button class="filter-btn active" data-filter="all" aria-pressed="true">Toutes</button>
       <button class="filter-btn" data-filter="active" aria-pressed="false">En cours</button>
       <button class="filter-btn" data-filter="completed" aria-pressed="false">Terminées</button>
     </div>
 
+    <!-- Conteneur de liste dynamique : géré par le moteur de rendu (render) -->
+    <!-- L'attribut aria-live="polite" prévient les lecteurs d'écran des changements sans interrompre l'utilisateur -->
     <ul id="task-list" aria-live="polite"></ul>
 
+    <!-- Pied de carte : Compteur dynamique de tâches restantes -->
     <footer class="footer-stats">
       <span id="task-count" aria-live="polite">0 tâche en cours</span>
     </footer>
+
   </div>
 
+  <!-- Script applicatif Vanilla JS chargé à la fin du document -->
   <script src="app.js"></script>
 </body>
 </html>
