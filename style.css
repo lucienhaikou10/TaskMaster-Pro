@@ -187,11 +187,11 @@ body {
   gap: 4px;
 }
 
-/* Bouton de modification */
+/* Bouton de modification (jaune ambré ergonomique) */
 .edit-btn {
   background: none;
   border: none;
-  color: #1a73e8;
+  color: #d97706;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -202,7 +202,8 @@ body {
 }
 
 .edit-btn:hover {
-  background-color: #e8f0fe;
+  background-color: #fef3c7;
+  color: #b45309;
 }
 
 /* Bouton de suppression individuel */
