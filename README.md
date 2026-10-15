@@ -5,7 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 
-> Application monopage (*SPA*) moderne et réactive de gestion de tâches quotidiennes, développée en **pur JavaScript ES6+ (Vanilla JS)** sans aucun framework ni bibliothèque tierce.
+> **Application de gestion de tâches réactive, conçue avec une architecture State-Driven, immutabilité stricte et délégation d'événements.**  
+> *Ce projet est l'un de mes projets réalisés lors de mon apprentissage de JavaScript en 2025, aujourd'hui consolidé et publié sur GitHub.*
 
 ---
 
