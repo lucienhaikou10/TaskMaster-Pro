@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskMaster Pro - JS Vanilla</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>TaskMaster Pro</h1>
+      <p class="subtitle">Gestionnaire d'état réactif en Vanilla JS</p>
+    </header>
+
+    <form id="task-form">
+      <input
+        type="text"
+        id="task-input"
+        placeholder="Ajouter une tâche..."
+        required
+        autocomplete="off"
+        maxlength="200"
+      >
+      <button type="submit" id="add-btn">Ajouter</button>
+    </form>
+
+    <div class="filters" id="filter-container" role="group" aria-label="Filtrer les tâches">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true">Toutes</button>
+      <button class="filter-btn" data-filter="active" aria-pressed="false">En cours</button>
+      <button class="filter-btn" data-filter="completed" aria-pressed="false">Terminées</button>
+    </div>
+
+    <ul id="task-list" aria-live="polite"></ul>
+
+    <footer class="footer-stats">
+      <span id="task-count" aria-live="polite">0 tâche en cours</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
