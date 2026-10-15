@@ -48,6 +48,12 @@ let tasks = [];
  */
 let currentFilter = "all";
 
+/**
+ * Identifiant de la tâche en cours d'édition (null si aucune édition en cours)
+ * @type {string | null}
+ */
+let editingTaskId = null;
+
 
 // ==============================================================================
 // 2. SÉLECTEURS DU DOM (DOM CACHING)
@@ -220,6 +226,48 @@ function setFilter(filter) {
   }
 }
 
+/**
+ * Bascule une tâche en mode édition et focalise son champ de saisie
+ * @param {string} id - Identifiant de la tâche à modifier
+ */
+function startEditing(id) {
+  editingTaskId = id;
+  render();
+
+  // Focus immédiat et sélection du texte pour une saisie rapide
+  const editInput = document.querySelector(`.task-item[data-id="${id}"] .edit-input`);
+  if (editInput) {
+    editInput.focus();
+    editInput.select();
+  }
+}
+
+/**
+ * Valide et sauvegarde la modification du titre d'une tâche de façon immuable
+ * @param {string} id - Identifiant de la tâche modifiée
+ * @param {string} rawTitle - Nouveau libellé saisi
+ */
+function saveEditing(id, rawTitle) {
+  const newTitle = rawTitle.trim();
+  if (newTitle !== "") {
+    // IMMUTABILITÉ : .map() crée un nouveau tableau et un nouvel objet tâche
+    tasks = tasks.map((task) =>
+      task.id === id ? { ...task, title: newTitle.slice(0, 200) } : task
+    );
+    saveTasks();
+  }
+  editingTaskId = null;
+  render();
+}
+
+/**
+ * Annule le mode édition en cours sans apporter de changement
+ */
+function cancelEditing() {
+  editingTaskId = null;
+  render();
+}
+
 
 // ==============================================================================
 // 5. MOTEUR DE RENDU (RENDER ENGINE)
@@ -289,6 +337,27 @@ function render() {
         const isChecked = task.completed ? "checked" : "";
         const completedClass = task.completed ? "completed" : "";
 
+        // Si la tâche est en cours d'édition, afficher le formulaire inline
+        if (task.id === editingTaskId) {
+          return `
+            <li class="task-item" data-id="${task.id}">
+              <form class="edit-form" data-action="save-edit-form">
+                <input 
+                  type="text" 
+                  class="edit-input" 
+                  value="${safeTitle}" 
+                  maxlength="200" 
+                  required
+                  aria-label="Modifier le titre de la tâche"
+                >
+                <button type="submit" class="save-btn" data-action="save">Valider</button>
+                <button type="button" class="cancel-btn" data-action="cancel">Annuler</button>
+              </form>
+            </li>
+          `;
+        }
+
+        // Mode affichage standard avec boutons Modifier et Supprimer
         return `
           <li class="task-item ${completedClass}" data-id="${task.id}">
             <div class="task-left">
@@ -301,14 +370,24 @@ function render() {
               >
               <label for="check-${task.id}" class="task-title">${safeTitle}</label>
             </div>
-            <button 
-              type="button" 
-              class="delete-btn" 
-              data-action="delete"
-              aria-label="Supprimer la tâche : ${safeTitle}"
-            >
-              Supprimer
-            </button>
+            <div class="task-actions">
+              <button 
+                type="button" 
+                class="edit-btn" 
+                data-action="edit"
+                aria-label="Modifier la tâche : ${safeTitle}"
+              >
+                Modifier
+              </button>
+              <button 
+                type="button" 
+                class="delete-btn" 
+                data-action="delete"
+                aria-label="Supprimer la tâche : ${safeTitle}"
+              >
+                Supprimer
+              </button>
+            </div>
           </li>
         `;
       })
@@ -348,17 +427,55 @@ function initEventListeners() {
 
   // --- C. Délégation de clic sur la liste des tâches (#task-list) ---
   taskList.addEventListener("click", (e) => {
-    // Interception de l'action de suppression
+    // 1. Action de suppression
     const deleteBtn = e.target.closest("[data-action='delete']");
     if (deleteBtn) {
       const taskItem = deleteBtn.closest("[data-id]");
       if (taskItem) {
         deleteTask(taskItem.dataset.id);
       }
+      return;
+    }
+
+    // 2. Action d'entrée en mode édition
+    const editBtn = e.target.closest("[data-action='edit']");
+    if (editBtn) {
+      const taskItem = editBtn.closest("[data-id]");
+      if (taskItem) {
+        startEditing(taskItem.dataset.id);
+      }
+      return;
+    }
+
+    // 3. Action d'annulation du mode édition
+    const cancelBtn = e.target.closest("[data-action='cancel']");
+    if (cancelBtn) {
+      cancelEditing();
+      return;
     }
   });
 
-  // --- D. Délégation d'état de changement (Checkbox & Label) ---
+  // --- D. Soumission du formulaire d'édition inline ---
+  taskList.addEventListener("submit", (e) => {
+    const editForm = e.target.closest("[data-action='save-edit-form']");
+    if (editForm) {
+      e.preventDefault();
+      const taskItem = editForm.closest("[data-id]");
+      const input = editForm.querySelector(".edit-input");
+      if (taskItem && input) {
+        saveEditing(taskItem.dataset.id, input.value);
+      }
+    }
+  });
+
+  // --- E. Touche Échap pour quitter l'édition ---
+  taskList.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && editingTaskId !== null) {
+      cancelEditing();
+    }
+  });
+
+  // --- F. Délégation d'état de changement (Checkbox & Label) ---
   // L'écouteur sur 'change' capte à la fois le clic sur la case à cocher,
   // le clic sur le <label for="..."> associé, et la touche Espace du clavier.
   // Cela résout élégamment tout risque de double-bascule accidentelle.

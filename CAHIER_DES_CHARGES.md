@@ -156,6 +156,16 @@ interface Task {
 * **Lecture (`loadTasks`)** : Lecture du JSON avec `try / catch`. En cas d'erreur ou d'absence, repli sur `[]`.
 * **Écriture (`saveTasks`)** : Enregistrement avec `try / catch` pour capturer un éventuel dépassement de quota.
 
+### F8 : Modification du titre d'une tâche (Édition inline)
+* **Déclencheur** : Clic sur le bouton `.edit-btn` ("Modifier").
+* **Règles métier** :
+  1. Passage de la tâche ciblée en mode édition (`editingTaskId`).
+  2. Remplacement du libellé par un champ `<input class="edit-input">` pré-rempli, immédiatement sélectionné et focalisé.
+  3. Deux boutons d'action s'affichent : « Valider » et « Annuler ».
+  4. La validation (soumission du formulaire ou touche `Entrée`) applique une mise à jour immuable avec `.map()` après nettoyage `.trim()`.
+  5. L'annulation (clic sur « Annuler » ou touche `Échap`) rétablit l'affichage initial sans altération.
+  6. Persistance automatique dans `localStorage` en cas de validation.
+
 ---
 
 ## 6. Structure HTML de Référence d'un Élément (`<li>`)

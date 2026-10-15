@@ -90,7 +90,10 @@ body {
 /* Accessibilité Clavier : Contour de focus net pour les boutons */
 #add-btn:focus-visible,
 .filter-btn:focus-visible,
-.delete-btn:focus-visible {
+.delete-btn:focus-visible,
+.edit-btn:focus-visible,
+.save-btn:focus-visible,
+.cancel-btn:focus-visible {
   outline: 2px solid #1a73e8;
   outline-offset: 2px;
 }
@@ -177,6 +180,31 @@ body {
   color: #8c939d;
 }
 
+/* Groupe d'actions sur une tâche */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Bouton de modification */
+.edit-btn {
+  background: none;
+  border: none;
+  color: #1a73e8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.edit-btn:hover {
+  background-color: #e8f0fe;
+}
+
 /* Bouton de suppression individuel */
 .delete-btn {
   background: none;
@@ -193,6 +221,56 @@ body {
 
 .delete-btn:hover {
   background-color: #fde8e8;
+}
+
+/* Formulaire d'édition en ligne */
+.edit-form {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  align-items: center;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #1a73e8;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15);
+}
+
+.save-btn {
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #1557b0;
+}
+
+.cancel-btn {
+  background-color: #f0f2f5;
+  color: #65676b;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #e4e6eb;
 }
 
 /* --- 7. Pied de Carte (Statistiques) --- */

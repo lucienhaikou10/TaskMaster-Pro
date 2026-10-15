@@ -30,6 +30,7 @@ Le cahier des charges fonctionnel et technique révisé par l'équipe produit es
 ## 🛠️ Fonctionnalités Clés
 
 - ➕ **Création instantanée** : Ajout fluide au clavier (Entrée) ou au clic avec assainissement de saisie.
+- ✏️ **Modification en ligne (*Inline Editing*)** : Correction instantanée du titre via le bouton « Modifier » avec raccourcis clavier (`Entrée` pour sauvegarder, `Échap` pour annuler).
 - 🔄 **Résolution de parcours UX** : Si une tâche est ajoutée depuis le filtre « Terminées », la vue bascule automatiquement sur « Toutes » pour éviter la disparition perçue de la tâche.
 - ✅ **Bascule d'état (*Toggle*)** : Coche synchrone par case à cocher ou clic sur l'intitulé.
 - 🗑️ **Suppression sécurisée** : Retrait immédiat et recalcul réactif du compteur.
